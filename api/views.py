@@ -1,39 +1,14 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from rest_framework import generics, status
-from .serializers import UserSerializer, NoteSerializer, WatchlistSerializer, StockSerializer
+from .serializers import UserSerializer, WatchlistSerializer, StockSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny
-from .models import Note, Watchlist, Stock
+from .models import Watchlist, Stock
 from rest_framework.response import Response
 
 
-
-
-class NoteListCreate(generics.ListCreateAPIView):
-    serializer_class = NoteSerializer
-    permission_classes = [IsAuthenticated]
-
-    def get_queryset(self):
-        user = self.request.user
-        return Note.objects.filter(author=user)
-
-    def perform_create(self, serializer):
-        if serializer.is_valid():
-            serializer.save(author=self.request.user)
-        else:
-            print(serializer.errors)
-
-
-class NoteDelete(generics.DestroyAPIView):
-    serializer_class = NoteSerializer
-    permission_classes = [IsAuthenticated]
-
-    def get_queryset(self):
-        user = self.request.user
-        return Note.objects.filter(author=user)
-
-
 class CreateUserView(generics.CreateAPIView):
+   
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [AllowAny]
@@ -45,14 +20,6 @@ class GetUserInfo(generics.RetrieveAPIView):
 
     def get_object(self):
         return self.request.user
-    
-class GetALlUserInfo(generics.ListAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-    permission_classes = [IsAuthenticated]
-
-    def get_queryset(self):
-        return User.objects.all()
     
 
 # create a watchlist
