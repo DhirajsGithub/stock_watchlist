@@ -14,6 +14,7 @@ from pathlib import Path
 from datetime import timedelta
 from dotenv import load_dotenv
 import os
+import dj_database_url
 
 load_dotenv()
 
@@ -32,6 +33,7 @@ SECRET_KEY = "django-insecure-n$275bf_cd26f#y-j=@(4m5j-aqmj)xl*jia=fw_$*i2zix27k
 DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
+
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
@@ -104,6 +106,7 @@ DATABASES = {
     }
 }
 
+DATABASES["default"] = dj_database_url.parse("postgres://watchlist_django_user:fi59J4HJo3YjqIxjiKIiUTJkZyeELn8q@dpg-cp48lvf79t8c73ec7jsg-a.oregon-postgres.render.com/watchlist_django")
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
